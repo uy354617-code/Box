@@ -3,21 +3,15 @@ import java.awt.*;
 
 public class Calculator extends JFrame {
 
-    // Declare display
+    private JPanel numberPanel;
     private JTextField display;
 
     public Calculator() {
 
-        // Window title
+        // Window settings
         setTitle("Osman Calculator");
-
-        // Window size
         setSize(400, 500);
-
-        // Close operation
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        // Center window
         setLocationRelativeTo(null);
 
         // Set layout
@@ -42,8 +36,45 @@ public class Calculator extends JFrame {
         display.setBackground(Color.DARK_GRAY);
         display.setForeground(Color.WHITE);
 
-        // Add display to window
+        // Add display
         add(display, BorderLayout.NORTH);
+
+        // Create number panel
+        numberPanel = new JPanel(new GridLayout(4, 3, 5, 5));
+
+        // Number buttons
+        String[] numbers = {
+                "7", "8", "9",
+                "4", "5", "6",
+                "1", "2", "3",
+                "0"
+        };
+
+        // Create buttons
+        for (String number : numbers) {
+
+            JButton button = new JButton(number);
+
+            button.setFont(new Font("Arial", Font.BOLD, 22));
+
+            numberPanel.add(button);
+
+            button.addActionListener(e -> {
+
+                if (display.getText().equals("0")) {
+
+                    display.setText(number);
+
+                } else {
+
+                    display.setText(display.getText() + number);
+
+                }
+            });
+        }
+
+        // Add number panel
+        add(numberPanel, BorderLayout.CENTER);
 
         // Show window
         setVisible(true);
@@ -51,7 +82,8 @@ public class Calculator extends JFrame {
 
     public static void main(String[] args) {
 
-        Calculator calculator = new Calculator();
-
+        SwingUtilities.invokeLater(() -> {
+            Calculator calculator = new Calculator();
+        });
     }
 }
